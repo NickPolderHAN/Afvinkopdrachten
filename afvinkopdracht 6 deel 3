@@ -1,0 +1,34 @@
+def lees_inhoud(sequentie):
+    """
+    Opens enzymen.txt and passes it's contents and the sequence to the match function.
+
+    input -> sequentie
+    output -> match(sequentie, enzymen)
+    """
+    enzymen = dict()
+    with open("enzymen.txt") as file:
+        for line in file.readlines():
+            enzyme, restriction_site = line.split(" ")
+            enzymen[enzyme] = restriction_site.replace("^", "").replace("\n", "")
+
+    match(sequentie, enzymen)
+
+
+def match(sequentie, enzymen):
+    """
+    Kijkt of de restriction_sites in de sequentie zitten.
+
+    :param sequentie:
+    :param enzymen:
+    :return:
+    """
+    for enzyme, restriction_site in enzymen.items():
+        if restriction_site in sequentie:
+            enzym_index = sequentie.index(restriction_site)
+            print(f"{enzyme} matched met positie: {enzym_index}" )
+
+def main():
+    sequentie = "ACTAGCAACCTCAAACAGACACCATGGTGCACCTGACTCCTGTGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCC"
+    lees_inhoud(sequentie)
+
+main()
